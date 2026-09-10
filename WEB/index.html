@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Resúmenes PDF</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <div class="logo">📄 Resumen <span>PDF</span></div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="container main-content">
+        <!-- UPLOAD SECTION -->
+        <section class="upload-section" id="uploadSection">
+            <div class="upload-box">
+                <h1>Generador de Resúmenes PDF</h1>
+                <p class="subtitle">Carga un PDF y obtén un resumen inteligente</p>
+                
+                <div class="upload-form">
+                    <!-- FILE DROP ZONE -->
+                    <div class="drop-zone" id="dropZone">
+                        <input type="file" id="fileInput" accept=".pdf" hidden>
+                        <div class="drop-content">
+                            <div class="upload-icon">📁</div>
+                            <p><strong>Arrastra tu PDF aquí</strong></p>
+                            <p class="small">o <a href="#" onclick="document.getElementById('fileInput').click(); return false;" class="link">selecciona un archivo</a></p>
+                            <p class="file-info">PDF hasta 10 MB</p>
+                        </div>
+                    </div>
+
+                    <!-- OLLAMA CONFIGURATION -->
+                    <div class="form-group">
+                        <label for="ollamaUrl">URL del servidor Ollama:</label>
+                        <input type="text" id="ollamaUrl" placeholder="http://localhost:11434" value="http://localhost:11434" required>
+                        <small>Ollama debe estar ejecutándose en tu computadora</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ollamaModel">Modelo Ollama:</label>
+                        <input type="text" id="ollamaModel" placeholder="mistral" value="mistral" required>
+                        <small>Modelos disponibles: mistral, neural-chat, llama2, copilot (si descargaste la extensión)</small>
+                    </div>
+
+                    <!-- LANGUAGE SELECTION -->
+                    <div class="form-group">
+                        <label for="language">Idioma:</label>
+                        <select id="language">
+                            <option value="es">Español</option>
+                            <option value="en">Inglés</option>
+                        </select>
+                    </div>
+
+                    <!-- SUBMIT BUTTON -->
+                    <button type="button" id="submitBtn" class="btn btn-primary" disabled>Generar Resumen</button>
+                </div>
+
+                <!-- FILE INFO -->
+                <div id="fileInfo" class="file-info-box" style="display: none;">
+                    <p><strong>Archivo:</strong> <span id="fileName"></span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESULTS SECTION -->
+        <section id="resultsSection" class="results-section" style="display: none;">
+            <div class="results-box">
+                <!-- HEADER -->
+                <div class="results-header">
+                    <h2>Resumen Generado</h2>
+                    <button id="closeBtn" class="btn btn-secondary">✕ Cerrar</button>
+                </div>
+
+                <!-- LOADING STATE -->
+                <div id="loadingState" class="loading-state" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Procesando PDF con Ollama...</p>
+                </div>
+
+                <!-- SUMMARY OUTPUT -->
+                <div id="summaryOutput" style="display: none;">
+                    <div class="summary-content">
+                        <div class="summary-meta">
+                            <p><strong>Archivo:</strong> <span id="summaryFileName"></span></p>
+                            <p><strong>Palabras:</strong> <span id="wordCount">0</span></p>
+                        </div>
+                        <div class="summary-text">
+                            <h3>Resumen</h3>
+                            <div id="summaryText" class="summary-box"></div>
+                        </div>
+                        <div class="summary-actions">
+                            <button id="copyBtn" class="btn btn-secondary">📋 Copiar</button>
+                            <button id="downloadBtn" class="btn btn-secondary">⬇ Descargar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ERROR STATE -->
+                <div id="errorState" style="display: none;">
+                    <div class="error-box">
+                        <p><strong>⚠️ Error:</strong> <span id="errorMessage"></span></p>
+                        <details style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+                            <summary>Ver detalles técnicos</summary>
+                            <pre id="errorDetails" style="background: #f5f5f5; padding: 0.5rem; border-radius: 4px; overflow-x: auto;"></pre>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Generador de Resúmenes PDF</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="scripts/script.js"></script>
+</body>
+</html>
